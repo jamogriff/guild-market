@@ -3,7 +3,7 @@
 class InvoiceItem < ApplicationRecord
   belongs_to :invoice
   belongs_to :item
-  # enum status: { pending: 0, packaged: 1, shipped: 2 }
+  has_many :discounted_items
   enum status: [:pending, :packaged, :shipped]
 
   def self.total_revenue

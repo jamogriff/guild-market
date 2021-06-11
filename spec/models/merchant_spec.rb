@@ -13,6 +13,7 @@ RSpec.describe Merchant do
     it {should have_many :invoices}
     it {should have_many :transactions}
     it {should have_many :customers}
+    it {should have_many :bulk_discounts}
   end
 
   describe 'class methods' do
