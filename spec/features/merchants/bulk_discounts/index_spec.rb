@@ -20,6 +20,9 @@ save_and_open_page
       click_link "discount-#{@discount_1.id}"
       expect(current_path).to eq "/merchants/#{@merchant.id}/bulk_discounts/#{@discount_1.id}"
     end
+
+    it 'has list of next upcoming holidays in the US' do
+    end
   end
 
 end
