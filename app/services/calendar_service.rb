@@ -1,16 +1,25 @@
+require './app/errors/api_connection_error.rb'
+
 class CalendarService
-  ENDPOINT = 'https://date.nager.at/api/v2/NextPublicHolidays/US'
-  
-  def self.connect
-    @connection = Faraday.get(ENDPOINT)
-  end
 
   def self.next_three_holidays
-    if self.connect.status == 200
-      response = JSON.parse(self.connect.body, symbolize_names: true)
-      response[0..2]
+    response = conn.get('/api/v2/NextPublicHolidays/US')
+    validate_conn(response)[0..2]
+  end
+
+  private
+
+  def self.conn
+    # add base path here
+    Faraday.new('https://date.nager.at')
+    # can append a do block to assign headers in request
+  end
+
+  def self.validate_conn(response)
+    if response.status != 200
+      raise ApiConnectionError
     else
-      puts "Cannot connect to Calendar service"
+      JSON.parse(response.body, symbolize_names: true)
     end
   end
 end

@@ -1,38 +1,44 @@
 class GithubService
-  REPO_PATH = 'https://api.github.com/repos/suzkiee/little-esty-shop'
-  PULLS_PATH = 'https://api.github.com/repos/suzkiee/little-esty-shop/pulls?state=all'
-  CONTRIBUTOR_PATH = 'https://api.github.com/repos/suzkiee/little-esty-shop/contributors'
 
-  # This method can intake any path so API calls can be flexible.
-  def self.connect(path)
-    begin
-      validate_connection(Faraday.get(path))
+  def self.repo_details
+    response = conn.get('/repos/jamogriff/little-esty-shop')
+    validate_conn(response)
+  end
+
+  def self.num_merged_prs
+    response = conn.get('/repos/jamogriff/little-esty-shop/pulls?state=all')
+    validated_response = validate_conn(response)
+    validated_response.count do |pr|
+      pr[:merged_at]
     end
   end
 
-  # The following two methods utilize pre-specified paths that are common
-  def self.connect_repo
-    connect(REPO_PATH)
+  def self.contributors
+    team_usernames = ['netia1128', 'suzkiee', 'jamogriff', 'Jaybraum']
+    response = conn.get('/repos/jamogriff/little-esty-shop/contributors')
+    validated_response = validate_conn(response)
+
+    validated_response.each_with_object({}) do |login, hash|
+      if team_usernames.include? login[:login]
+        hash[login[:login]] = login[:contributions]
+      end
+    end
   end
 
-  def self.pull_requests
-    connect(PULLS_PATH)
+  private
+
+  def self.conn
+    Faraday.new('https://api.github.com') do |faraday|
+      faraday.headers['Authorization'] = ENV['github-api-key']
+    end
   end
 
-  def self.all_contributors
-    connect(CONTRIBUTOR_PATH)
-  end
-
-  # Could add better error if API response is not 200, but fine for our purposes
-  def self.validate_connection(response)
-    if !response.status == 200
-      # Tried doing a StandardError or flash[:alert]
-      # but both were unrecognized commands
-      puts "Connection to GitHub Service Interrupted"
-      nil
+  def self.validate_conn(response)
+    if response.status != 200
+      raise ApiConnectionError
     else
       JSON.parse(response.body, symbolize_names: true)
     end
   end
-end
 
+end
