@@ -6,7 +6,6 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <% @repo = GithubRepo.new %>
   </head>
 
   <body>
@@ -28,16 +27,7 @@
    </div>
 
    <div class="d-flex justify-content-around bg-dark mt-4">
-    <% if !@repo.nil? && !Rails.env.test? %>
-           <h6 class="p-3 text-light"><%= link_to @repo.data[:name], @repo.data[:html_url] %> has <%= @repo.num_merged_prs %> pull requests and counting.</h6>
-     <h6 class="p-3 text-light">Our Team:</h6>
-     <% @repo.contributors.each do |username, commits| %>
-     <h7 class="p-3 text-light"> * <%= username %>: <%= commits %> commits </h7>
-     <% rescue %>
-       <h4 class="p-3 text-light">Github Statistics Unavailable</h4>
-       <h4 class="p-3 text-light">Current Time is: <%= Time.now %></h4>
-     <% end %>
-    <% end %>
+     <%#<%= render partial: "partials/github_stats" %>%>
    </div>
   </body>
 </html>
