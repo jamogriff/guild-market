@@ -12,7 +12,7 @@
   <h3>Need Discount Ideas?</h3>
   <p>These three upcoming holidays in the US are a great time to have a seasonal sale:</p>
   <ul>
-  <% CalendarService.next_three_holidays.each do |holiday| %>
+  <% @calendar.each do |holiday| %>
     <li><%= holiday[:name] %></li>
   <% end %>
   </ul>

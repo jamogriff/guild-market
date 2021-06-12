@@ -1,5 +1,4 @@
 require 'rails_helper'
-require './app/services/calendar_service.rb'
 
 # VCR used for happy paths and webmock usee for sad path testing
 RSpec.describe 'Github Statistics' do

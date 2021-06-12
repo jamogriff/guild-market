@@ -66,11 +66,14 @@ RSpec.describe 'Merchants dashboard show page' do
     end
 
     #### BULK DISCOUNTS #######
+    # Bulk discounts page utilizes a web service, and thus needs to reference VCR for testing that functionality
     it 'has link to bulk discounts page' do
-      visit "/merchants/#{@merchant.id}/dashboard"
+      VCR.use_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays') do
+        visit "/merchants/#{@merchant.id}/dashboard"
 
-      click_link "View Discounts"
-      expect(current_path).to eq "/merchants/#{@merchant.id}/bulk_discounts"
+        click_link "View Discounts"
+        expect(current_path).to eq "/merchants/#{@merchant.id}/bulk_discounts"
+      end
     end
 
     it 'contains a table showing the top 5 customers by successful transactions' do
