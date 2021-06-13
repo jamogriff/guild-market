@@ -21,7 +21,7 @@
    <!-- This container envelops everything within a page and applies padding -->
    <div class="container-fluid p-4 footer">
      <% flash.each do |type, msg| %>
-       <div class="success" style="position: relative; top: -50%"><%= msg %></div>
+       <div id="alert" class="warning" style="position: relative; top: -50%"><%= msg %></div>
      <% end %>
      <%= yield %>
    </div>

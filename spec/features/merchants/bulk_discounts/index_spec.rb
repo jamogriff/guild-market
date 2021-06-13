@@ -28,16 +28,24 @@ RSpec.describe 'Bulk Discounts Index' do
   end
 
   describe 'appearance' do
-    it 'lists all of a merchant\'s bulk discounts', :vcr do
+    it 'lists all of a merchant\'s bulk discounts' do
       VCR.use_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays') do
         visit "/merchants/#{@merchant.id}/bulk_discounts"
         exp_1 = @discount_1.percentage_discount * 100
         exp_2 = @discount_2.percentage_discount * 100
-        expect(page).to have_content "#{exp_1}% off"
-        expect(page).to have_content "#{exp_2}% off"
+        expect(page).to have_content "#{exp_1.round}% off"
+        expect(page).to have_content "#{exp_2.round}% off"
         expect(page).to have_content @discount_1.quantity_threshold
         click_link "discount-#{@discount_1.id}"
         expect(current_path).to eq "/merchants/#{@merchant.id}/bulk_discounts/#{@discount_1.id}"
+      end
+    end
+
+    it 'has link to create a new discount' do
+      VCR.use_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays') do
+        visit "/merchants/#{@merchant.id}/bulk_discounts"
+        click_link "New Bulk Discount"
+        expect(current_path).to eq "/merchants/#{@merchant.id}/bulk_discounts/new"
       end
     end
   end

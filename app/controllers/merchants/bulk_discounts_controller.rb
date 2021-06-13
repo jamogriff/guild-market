@@ -10,9 +10,18 @@ class Merchants::BulkDiscountsController < ApplicationController
   end
 
   def new
+    @merchant = Merchant.find(params[:merchant_id])
   end
 
   def create
+    @merchant = Merchant.find(params[:merchant_id])
+    discount = @merchant.bulk_discounts.new(discount_params)
+    if discount.save
+      redirect_to merchant_bulk_discounts_path(id: params[:merchant_id]) 
+    else
+      flash[:warning] = "Whoops! #{error_message(discount.errors)}"
+      render :new
+    end
   end
 
   def edit
@@ -25,6 +34,10 @@ class Merchants::BulkDiscountsController < ApplicationController
   end
   
   private
+
+  def discount_params
+    params.require(:bulk_discount).permit(:percentage_discount, :quantity_threshold)
+  end
 
   # This will have to be explored at a later time,
   # Utilizing a serializer will allow to render out the error
