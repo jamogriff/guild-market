@@ -29,9 +29,15 @@ RSpec.describe Invoice do
         expect(Invoice.filter_by_unshipped_order_by_age.first.id).to eq(10)
       end
     end
+
   end
 
   describe 'instance methods' do
+    it 'returns set of invoice items with quantities greater than a number' do
+      invoice = Invoice.find(29)
+      # invoice only has 2 invoice items with quantities greater or equal to 9
+      expect(invoice.quantities_more_than(9).count).to eq 2
+    end
     # Test pulls instance from test db to test against
     it 'has array of available status options' do
       single_invoice = Invoice.last
