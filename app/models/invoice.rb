@@ -15,6 +15,11 @@ class Invoice < ApplicationRecord
     .order(:created_at)
   end
 
+  # Parameter doesn't need to be an array
+  def quantities_between(array)
+    invoice_items.where("invoice_items.quantity >= #{array[0]}").where("invoice_items.quantity < #{array[1]}")
+  end
+
   def statuses
     ['in progress', 'completed', 'cancelled']
   end

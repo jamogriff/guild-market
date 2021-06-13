@@ -14,6 +14,7 @@ RSpec.describe InvoiceItem do
 
         expect(InvoiceItem.total_revenue).to eq(60481323)
       end
+
     end
   end
 end

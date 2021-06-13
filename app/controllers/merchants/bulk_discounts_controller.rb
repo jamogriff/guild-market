@@ -7,6 +7,8 @@ class Merchants::BulkDiscountsController < ApplicationController
   end
 
   def show
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = BulkDiscount.find(params[:id])
   end
 
   def new
@@ -25,13 +27,33 @@ class Merchants::BulkDiscountsController < ApplicationController
   end
 
   def edit
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = BulkDiscount.find(params[:id])
   end
 
   def update
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = BulkDiscount.find(params[:id])
+    if @discount.update(discount_params)
+      redirect_to merchant_bulk_discount_path(merchant_id: params[:merchant_id], id: params[:id]) 
+    else
+      flash.now[:warning] = "Whoops! #{error_message(@discount.errors)}"
+      render :edit
+    end
   end
 
   def destroy
+    @merchant = Merchant.find(params[:merchant_id])
+    discount = BulkDiscount.find(params[:id])
+    if discount.destroy
+      redirect_to merchant_bulk_discounts_path(id: params[:merchant_id]) 
+      flash[:notice] = "Discount Successfully Deleted"
+    else
+      redirect_to merchant_bulk_discounts_path(id: params[:merchant_id]) 
+      flash[:notice] = "An error occurred. Please try again."
+    end
   end
+
   
   private
 
