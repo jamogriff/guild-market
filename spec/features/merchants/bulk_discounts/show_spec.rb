@@ -17,5 +17,10 @@ RSpec.describe 'discount show page' do
       expect(page).to have_content @discount_1.quantity_threshold
     end
 
+    it 'has link to edit discount' do
+      visit "/merchants/#{@merchant.id}/bulk_discounts/#{@discount_1.id}"
+
+      expect(current_path).to eq "/merchants/#{@merchant.id}/bulk_discounts/#{@discount_1.id}/edit"
+    end
   end
 end
