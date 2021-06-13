@@ -10,5 +10,10 @@ class BulkDiscount < ApplicationRecord
   def self.order_by_threshold
     order(:quantity_threshold)
   end
+
+  # Don't need this method afterall
+  def self.thresholds
+    order_by_threshold.pluck(:quantity_threshold)
+  end
 end
 

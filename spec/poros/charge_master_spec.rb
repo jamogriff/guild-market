@@ -4,9 +4,10 @@ RSpec.describe ChargeMaster do
 
   before :each do
     BulkDiscount.destroy_all
+    DiscountedItem.destroy_all
     # YO These values depend on full data set and need to be reworked
-    @merchant = Merchant.find(7)
-    @invoice = Invoice.find(29)
+    @merchant = Merchant.first
+    @invoice = @merchant.invoices.first
     @bulk_discount_1 = @merchant.bulk_discounts.create!(quantity_threshold: 5, percentage_discount: 0.15)
     @bulk_discount_2 = @merchant.bulk_discounts.create!(quantity_threshold: 8, percentage_discount: 0.20)
     @bulk_discount_3 = @merchant.bulk_discounts.create!(quantity_threshold: 10, percentage_discount: 0.25)
@@ -27,6 +28,15 @@ RSpec.describe ChargeMaster do
       #expect(case_1).to eq true
       #expect(case_2).to eq true
       #expect(case_3).to eq true
+    end
+  end
+
+  describe 'helper methods' do
+    it 'can create subsets for an array' do
+      array_1 = [1,2,3,4]
+      array_2 = [1,2,3,4,5]
+      expect(ChargeMaster.create_subset(array_1)).to eq [[1,2],[2,3],[3,4]]
+      expect(ChargeMaster.create_subset(array_2)).to eq [[1,2],[2,3],[3,4],[4,5]]
     end
   end
 end

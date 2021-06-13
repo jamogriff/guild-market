@@ -33,10 +33,10 @@ RSpec.describe Invoice do
   end
 
   describe 'instance methods' do
-    it 'returns set of invoice items with quantities greater than a number' do
+    it 'returns set of invoice items with quantities between two numbers' do
       invoice = Invoice.find(29)
-      # invoice only has 2 invoice items with quantities greater or equal to 9
-      expect(invoice.quantities_more_than(9).count).to eq 2
+      # invoice only has 2 invoice items with quantities between 9 and 11
+      expect(invoice.quantities_between([9,11]).count).to eq 2
     end
     # Test pulls instance from test db to test against
     it 'has array of available status options' do

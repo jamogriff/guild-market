@@ -32,6 +32,10 @@ RSpec.describe BulkDiscount do
       expect(@merchant.bulk_discounts.order_by_threshold.first).to eq @discount_1
       expect(@merchant.bulk_discounts.order_by_threshold.last).to eq @discount_3
     end
+
+    it 'returns quantity thresholds' do
+      expect(@merchant.bulk_discounts.thresholds).to eq [10,18,25]
+    end
   end
 
 end
