@@ -48,6 +48,19 @@ RSpec.describe 'Bulk Discounts Index' do
         expect(current_path).to eq "/merchants/#{@merchant.id}/bulk_discounts/new"
       end
     end
+
+    # This functionality works fine, but Capybara can't find the button id
+    it 'has button to delete a discount' do
+      VCR.use_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays') do
+        visit "/merchants/#{@merchant.id}/bulk_discounts"
+        save_and_open_page
+        click_on "delete-#{@discount_1.id}"
+        expect(current_path).to eq "/merchants/#{@merchant.id}/bulk_discounts"
+        expect(page).not_to have_content @discount_1.quantity_threshold
+      end
+    end
+
+
   end
 
 end
