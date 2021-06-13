@@ -19,7 +19,7 @@ class Merchants::BulkDiscountsController < ApplicationController
     if discount.save
       redirect_to merchant_bulk_discounts_path(id: params[:merchant_id]) 
     else
-      flash[:warning] = "Whoops! #{error_message(discount.errors)}"
+      flash.now[:warning] = "Whoops! #{error_message(discount.errors)}"
       render :new
     end
   end

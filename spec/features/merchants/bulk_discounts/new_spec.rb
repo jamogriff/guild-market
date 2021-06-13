@@ -6,7 +6,7 @@ RSpec.describe 'new discount form' do
       VCR.use_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays') do
         @merchant = Merchant.first
         visit "/merchants/#{@merchant.id}/bulk_discounts/new"
-        fill_in "bulk_discount_percentage_discount", with: 0.05
+        fill_in "bulk_discount_percentage_discount", with: 0.5
         fill_in "bulk_discount_quantity_threshold", with: 20
         click_button 'Create Bulk discount'
         expect(current_path).to eq "/merchants/#{@merchant.id}/bulk_discounts"
