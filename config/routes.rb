@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get '/dashboard', to: 'dashboard#show', as: 'merchant_dashboard'
     resources :items, except: :destroy
     resources :invoices
+    resources :bulk_discounts
   end
 
   namespace :admin do

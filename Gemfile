@@ -36,27 +36,32 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem "bootstrap_form", "~> 4.0"
-gem 'jquery-rails'
-
-gem 'faker'
-gem 'factory_bot'
-
 # API Connection and JSON parsing
 # require 'faraday'
 # require 'json'
 gem 'faraday'
 gem 'json'
 
+# Styling - could get rid off
+gem "bootstrap_form", "~> 4.0"
+gem 'jquery-rails'
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'pry'
+  gem 'byebug'
+  gem 'figaro'
+end
+
+group :test do
   gem 'rspec-rails', '~> 4.0.1'
   gem 'capybara'
   gem 'launchy'
   gem 'shoulda-matchers'
-  gem 'orderly'
   gem 'simplecov'
+  gem 'webmock'
+  gem 'vcr'
 end
 
 group :development do
@@ -68,5 +73,6 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+# DEVELOPING ON WINDOWS? Turn the dependency on below:
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+#gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

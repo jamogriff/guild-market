@@ -1,0 +1,20 @@
+<h2><%= @merchant.name %>'s Discounts</h2>
+
+<%= link_to "New Bulk Discount", new_merchant_bulk_discount_path(merchant_id: @merchant.id) %>
+<ul>
+  <% @merchant.bulk_discounts.each do |discount| %>
+    <li><%= (discount.percentage_discount * 100).round %>% off when purchasing <%= discount.quantity_threshold %> or more items.
+      <%= link_to "More Info", merchant_bulk_discount_path(merchant_id: @merchant.id, id: discount.id), id: "discount-#{discount.id}" %>
+    </li>
+  <% end %>
+</ul>
+
+<section id="upcoming-holidays">
+  <h3>Need Discount Ideas?</h3>
+  <p>These three upcoming holidays in the US are a great time to have a seasonal sale:</p>
+  <ul>
+  <% @calendar.each do |holiday| %>
+    <li><%= holiday[:name] %></li>
+  <% end %>
+  </ul>
+<section>

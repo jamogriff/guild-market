@@ -3,6 +3,7 @@
     <h1><%= @merchant.name %></h1>
     <h2><%= link_to 'All Items', "/merchants/#{@merchant.id}/items" %> </h2>
     <h2><%= link_to 'All Invoices', "/merchants/#{@merchant.id}/invoices" %> </h2>
+    <h2><%= link_to "View Discounts", merchant_bulk_discounts_path(merchant_id: @merchant.id) %></h2>
     </section>
 
     <div class="row">
