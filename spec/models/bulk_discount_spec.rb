@@ -2,6 +2,13 @@ require 'rails_helper'
 
 RSpec.describe BulkDiscount do
 
+  before :each do
+    @merchant = Merchant.first
+    @discount_1 = @merchant.bulk_discounts.create!(percentage_discount: 0.20, quantity_threshold: 10)
+    @discount_2 = @merchant.bulk_discounts.create!(percentage_discount: 0.30, quantity_threshold: 18)
+    @discount_3 = @merchant.bulk_discounts.create!(percentage_discount: 0.30, quantity_threshold: 25)
+  end
+
   describe 'relationships' do
     it {should belong_to :merchant }
     it {should have_many :discounted_items }
@@ -19,5 +26,12 @@ RSpec.describe BulkDiscount do
     it {should validate_presence_of :percentage_discount}
     it {should validate_presence_of :quantity_threshold}
     end
+
+  describe 'class methods' do
+    it 'should list bulk orders by threshold' do
+      expect(@merchant.bulk_discounts.order_by_threshold.first).to eq @discount_1
+      expect(@merchant.bulk_discounts.order_by_threshold.last).to eq @discount_3
+    end
+  end
 
 end
