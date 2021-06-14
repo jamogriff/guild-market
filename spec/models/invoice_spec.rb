@@ -38,6 +38,12 @@ RSpec.describe Invoice do
       # invoice only has 2 invoice items with quantities between 9 and 11
       expect(invoice.quantities_between([9,11]).count).to eq 2
     end
+
+    it 'returns set of invoices larger than or equal to a number' do
+      invoice = Invoice.find(29)
+      expect(invoice.quantities_more_than(10).count).to eq 1
+    end
+
     # Test pulls instance from test db to test against
     it 'has array of available status options' do
       single_invoice = Invoice.last

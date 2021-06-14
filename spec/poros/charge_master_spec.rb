@@ -20,7 +20,6 @@ RSpec.describe ChargeMaster do
       correct_placement_1 = DiscountedItem.where("discounted_items.percentage_discount = 0.15")
       correct_placement_2 = DiscountedItem.where("discounted_items.percentage_discount = 0.20")
       correct_placement_3 = DiscountedItem.where("discounted_items.percentage_discount = 0.25")
-      ##### YO I need to add a quantity column in DiscountedItem
       #case_1 = correct_placement_1.all? { |item| item.quantity >= 5 && item.quantity < 8 }
       #case_2 = correct_placement_2.all? { |item| item.quantity >= 8 && item.quantity < 10 }
       #case_3 = correct_placement_3.all? { |item| item.quantity >= 10}
@@ -37,6 +36,13 @@ RSpec.describe ChargeMaster do
       array_2 = [1,2,3,4,5]
       expect(ChargeMaster.create_subset(array_1)).to eq [[1,2],[2,3],[3,4]]
       expect(ChargeMaster.create_subset(array_2)).to eq [[1,2],[2,3],[3,4],[4,5]]
+    end
+
+    # Method below is only executed from within ::initialize_discount,
+    # So input needs to be pre-sorted
+    it 'accounts for checking invoice items against largest discount' do
+      ChargeMaster.initialize_largest_discount(@invoice, @merchant.bulk_discounts.order_by_threshold)
+      expect(DiscountedItem.all.empty?).to eq true
     end
   end
 end

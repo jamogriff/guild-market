@@ -9,14 +9,27 @@ class ChargeMaster
     threshold_sets = ChargeMaster.create_subset(ordered_discounts)
     threshold_sets.each do |set|
       items = invoice.quantities_between([set.first.quantity_threshold, set.last.quantity_threshold])
-      binding.pry
       items.each do |item|
         DiscountedItem.create!(invoice_item: item, bulk_discount: set.first, 
                                percentage_discount: set.first.percentage_discount,
                                quantity: item.quantity)
       end
     end
-    binding.pry
+    # Ideally the below helper method could be refactored to oblivion
+    ChargeMaster.initialize_largest_discount(invoice, ordered_discounts)
+  end
+
+  # Method intakes an invoice and assumes discount parameter is already ordered
+  def self.initialize_largest_discount(invoice, discounts)
+    largest_discount = discounts.last
+    items = invoice.quantities_more_than(largest_discount.quantity_threshold)
+    if !items.empty?
+      items.each do |item|
+        DiscountedItem.create!(invoice_item: item, bulk_discount: largest_discount, 
+                               percentage_discount: largest_discount.percentage_discount,
+                               quantity: item.quantity)
+      end
+    end
   end
 
   # There's likely a built-in method that accomplishes this task,

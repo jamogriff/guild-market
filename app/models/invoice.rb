@@ -20,6 +20,10 @@ class Invoice < ApplicationRecord
     invoice_items.where("invoice_items.quantity >= #{array[0]}").where("invoice_items.quantity < #{array[1]}")
   end
 
+  def quantities_more_than(num)
+    invoice_items.where("invoice_items.quantity >= #{num}")
+  end
+
   def statuses
     ['in progress', 'completed', 'cancelled']
   end
