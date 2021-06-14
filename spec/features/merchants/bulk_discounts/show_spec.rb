@@ -19,7 +19,8 @@ RSpec.describe 'discount show page' do
 
     it 'has link to edit discount' do
       visit "/merchants/#{@merchant.id}/bulk_discounts/#{@discount_1.id}"
-
+      save_and_open_page
+      click_link "Edit Discount"
       expect(current_path).to eq "/merchants/#{@merchant.id}/bulk_discounts/#{@discount_1.id}/edit"
     end
   end
