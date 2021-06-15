@@ -7,6 +7,7 @@ RSpec.describe Invoice do
     it {should have_many :invoice_items}
     it {should have_many :transactions}
     it {should have_many(:items).through(:invoice_items)}
+    it {should have_many(:merchants).through(:items)}
   end
 
   # Not really legacy functionality, but I'm isolating the scope of the before hook
@@ -62,14 +63,14 @@ RSpec.describe Invoice do
   describe 'new functionality' do
     before :each do
       DiscountedItem.destroy_all
-      merchant = Merchant.first
+      @merchant = Merchant.first
       @invoice = Invoice.find(29)
-      item =  merchant.items.create!(name: 'Qui Essie', description: 'Lorem ipsim', unit_price: 75107)
+      item =  @merchant.items.create!(name: 'Qui Essie', description: 'Lorem ipsim', unit_price: 75107)
       InvoiceItem.create!(item_id: item.id, invoice_id: @invoice.id, quantity: 8, unit_price: 13635, status: 1)
-      bulk_discount_1 = merchant.bulk_discounts.create!(quantity_threshold: 5, percentage_discount: 0.15)
-      bulk_discount_2 = merchant.bulk_discounts.create!(quantity_threshold: 8, percentage_discount: 0.20)
-      bulk_discount_3 = merchant.bulk_discounts.create!(quantity_threshold: 10, percentage_discount: 0.25)
-      ChargeMaster.apply_discounts(@invoice.id, merchant.bulk_discounts)
+      bulk_discount_1 = @merchant.bulk_discounts.create!(quantity_threshold: 5, percentage_discount: 0.15)
+      bulk_discount_2 = @merchant.bulk_discounts.create!(quantity_threshold: 8, percentage_discount: 0.20)
+      bulk_discount_3 = @merchant.bulk_discounts.create!(quantity_threshold: 10, percentage_discount: 0.25)
+      ChargeMaster.apply_discounts(@invoice.id, @merchant.bulk_discounts)
     end
 
     it 'calculates discounted revenue' do
@@ -92,5 +93,6 @@ RSpec.describe Invoice do
     it 'collects invoice items that are discounte' do
       expect(@invoice.discounted_items.length).to eq 4
     end
+
   end
 end

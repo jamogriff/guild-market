@@ -7,6 +7,7 @@ RSpec.describe Merchant do
     @item_2 = @gary.items.create!(name: "Pants", description: "Gary does not wear it", unit_price: 6, enabled: "disabled")
   end
 
+  # Most of these references weren't added as db level constraints
   describe 'relationships' do
     it {should have_many :items}
     it {should have_many :invoice_items}

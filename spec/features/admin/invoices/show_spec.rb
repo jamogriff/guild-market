@@ -59,7 +59,6 @@ RSpec.describe 'invoices show page', type: :feature do
         @merchant.bulk_discounts.create!(percentage_discount: 0.25, quantity_threshold: 5)
         @merchant.bulk_discounts.create!(percentage_discount: 0.30, quantity_threshold: 8)
         @merchant.bulk_discounts.create!(percentage_discount: 0.25, quantity_threshold: 5)
-        ChargeMaster.apply_discounts(@invoice.id, @merchant.bulk_discounts)
       end
 
       it 'lists total revenue including discounts' do
