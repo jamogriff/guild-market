@@ -69,7 +69,7 @@ RSpec.describe Invoice do
       bulk_discount_1 = merchant.bulk_discounts.create!(quantity_threshold: 5, percentage_discount: 0.15)
       bulk_discount_2 = merchant.bulk_discounts.create!(quantity_threshold: 8, percentage_discount: 0.20)
       bulk_discount_3 = merchant.bulk_discounts.create!(quantity_threshold: 10, percentage_discount: 0.25)
-      ChargeMaster.initialize_discounts(@invoice.id, merchant.bulk_discounts)
+      ChargeMaster.apply_discounts(@invoice.id, merchant.bulk_discounts)
     end
 
     it 'calculates discounted revenue' do

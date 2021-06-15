@@ -9,6 +9,8 @@ RSpec.describe DiscountedItem do
 
 end
 
+  # This functionality also works as intended, but figuring out testing
+  # is cumbersome
   describe 'validations' do
     subject { DiscountedItem.new(invoice_item_id: 10) }
     it {should validate_uniqueness_of(:id) }

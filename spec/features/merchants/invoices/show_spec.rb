@@ -76,17 +76,18 @@ RSpec.describe 'Merchant invoice show page' do
 
     it 'lists total discounted revenue' do
       visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
-      exp_amount = @invoice.discounted_revenue / 100.0
-
-      expect(page).to have_content(exp_amount)
+      exp_amount = @invoice.revenue_with_discounts / 100.0
+      formatted_num ='$9,957.07' 
+      expect(page).to have_content(formatted_num)
     end
 
+    # Getting this bug worked out took some real software engineering!
     it 'discounted revenue does not change when accessing page multiple times' do
       counter = 0
       results = []
       5.times do 
         visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
-        results << @invoice.discounted_revenue / 100.0
+        results << @invoice.revenue_with_discounts / 100.0
       end
 
       exp_results = results.uniq.length == 1

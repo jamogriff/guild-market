@@ -13,11 +13,11 @@ RSpec.describe ChargeMaster do
     @bulk_discount_3 = @merchant.bulk_discounts.create!(quantity_threshold: 10, percentage_discount: 0.25)
   end
 
-  describe '::initialize_discounts' do
+  describe '::apply_discounts' do
     it 'is able to create new discounted items' do
       expect(DiscountedItem.all.empty?).to eq true
 
-      ChargeMaster.initialize_discounts(@invoice.id, @merchant.bulk_discounts)
+      ChargeMaster.apply_discounts(@invoice.id, @merchant.bulk_discounts)
       correct_placement_1 = DiscountedItem.where("discounted_items.percentage_discount = 0.15")
       correct_placement_2 = DiscountedItem.where("discounted_items.percentage_discount = 0.20")
       correct_placement_3 = DiscountedItem.where("discounted_items.percentage_discount = 0.25")
@@ -39,11 +39,11 @@ RSpec.describe ChargeMaster do
       expect(ChargeMaster.create_subset(array_2)).to eq [[1,2],[2,3],[3,4],[4,5]]
     end
 
-    # Method below is only executed from within ::initialize_discount,
+    # Method below is only executed from within ::apply_discount,
     # So input needs to be pre-sorted
     it 'accounts for checking invoice items against largest discount' do
       DiscountedItem.destroy_all
-      ChargeMaster.initialize_largest_discount(@invoice, @merchant.bulk_discounts.order_by_threshold)
+      ChargeMaster.apply_largest_discount(@invoice, @merchant.bulk_discounts.order_by_threshold)
       correct_placement_3 = DiscountedItem.where("discounted_items.percentage_discount = 0.25")
       case_3 = correct_placement_3.all? { |item| item.quantity >= 10}
       expect(case_3).to eq true

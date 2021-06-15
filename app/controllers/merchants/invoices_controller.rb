@@ -12,9 +12,9 @@ class Merchants::InvoicesController < ApplicationController
     @invoice_items = @invoice.invoice_items
     
     # ChargeMaster applies correct disount to all of invoice's items
-    # Memoization used here, but not sure if it will prevent duplicate entries to DiscountedItems
-    @initialize_discounts ||= ChargeMaster.initialize_discounts(@invoice.id, @bulk_discounts)
-    binding.pry
+    # There's a unique constraint at database level that won't allow 
+    # duplicate records in DiscountedItems
+    @apply_discounts ||= ChargeMaster.apply_discounts(@invoice.id, @bulk_discounts)
   end
 
   def update
