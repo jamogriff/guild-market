@@ -7,8 +7,14 @@ class Merchants::InvoicesController < ApplicationController
 
   def show
     @merchant = Merchant.find(params[:merchant_id])
+    @bulk_discounts = @merchant.bulk_discounts
     @invoice = Invoice.find(params[:id])
     @invoice_items = @invoice.invoice_items
+    
+    # ChargeMaster applies correct disount to all of invoice's items
+    # Memoization used here, but not sure if it will prevent duplicate entries to DiscountedItems
+    @initialize_discounts ||= ChargeMaster.initialize_discounts(@invoice.id, @bulk_discounts)
+    binding.pry
   end
 
   def update

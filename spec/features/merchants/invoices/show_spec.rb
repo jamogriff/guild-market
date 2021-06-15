@@ -62,4 +62,37 @@ RSpec.describe 'Merchant invoice show page' do
       expect(page).to have_content("Expected Total Revenue: $136.00")
     end
   end
+
+  describe 'discount functionality' do
+
+    before :each do
+      BulkDiscount.destroy_all
+      @merchant = Merchant.first
+      @invoice = Invoice.find(29)
+      @merchant.bulk_discounts.create!(percentage_discount: 0.25, quantity_threshold: 5)
+      @merchant.bulk_discounts.create!(percentage_discount: 0.30, quantity_threshold: 8)
+      @merchant.bulk_discounts.create!(percentage_discount: 0.25, quantity_threshold: 5)
+    end
+
+    it 'lists total discounted revenue' do
+      visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
+      exp_amount = @invoice.discounted_revenue / 100.0
+
+      expect(page).to have_content(exp_amount)
+    end
+
+    it 'discounted revenue does not change when accessing page multiple times' do
+      counter = 0
+      results = []
+      5.times do 
+        visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
+        results << @invoice.discounted_revenue / 100.0
+      end
+
+      exp_results = results.uniq.length == 1
+      expect(exp_results).to eq true
+    end
+
+
+  end
 end

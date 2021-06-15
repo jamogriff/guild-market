@@ -8,3 +8,8 @@ RSpec.describe DiscountedItem do
   end
 
 end
+
+  describe 'validations' do
+    subject { DiscountedItem.new(invoice_item_id: 10) }
+    it {should validate_uniqueness_of(:id) }
+  end
