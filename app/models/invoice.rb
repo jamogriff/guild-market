@@ -33,6 +33,17 @@ class Invoice < ApplicationRecord
     invoice_items.total_revenue
   end
 
+  # Flex that left outer join
+  # TODO Needs testing
+  def full_price_items
+    self.invoice_items.left_outer_joins(:discounted_items).where("discounted_items.id IS null")
+  end
+
+  # TODO Needs testing
+  def discounted_items
+    self.invoice_items.joins(:discounted_items)
+  end
+
   def discounted_revenue
     self.invoice_items.joins(:discounted_items).sum("invoice_items.unit_price * invoice_items.quantity * discounted_items.percentage_discount")
   end
