@@ -42,6 +42,7 @@ class Invoice < ApplicationRecord
     invoice_items.joins(:discounted_items)
   end
 
+  # Result is a float
   def discounted_revenue
     discounted_items.sum("invoice_items.unit_price * invoice_items.quantity * discounted_items.percentage_discount")
   end

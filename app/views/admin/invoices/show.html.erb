@@ -1,7 +1,8 @@
 <h2>Invoice #<%= @invoice.id %></h2>
 
 <section id="revenue">
-  <strong>This invoice is expected to generate $<%= @invoice.revenue / 100.0 %></strong>
+  <strong>This invoice is expected to generate <%=number_to_currency(@invoice.revenue / 100.0) %></strong>
+  <h5>Total Revenue with Discounts Applied: <%= number_to_currency(@invoice.revenue_with_discounts / 100) %></h5>
 </section>
 <table>
   <tr>
