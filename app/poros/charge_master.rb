@@ -11,8 +11,7 @@ class ChargeMaster
       items = invoice.quantities_between([set.first.quantity_threshold, set.last.quantity_threshold])
       items.each do |item|
         DiscountedItem.create!(invoice_item: item, bulk_discount: set.first, 
-                               percentage_discount: set.first.percentage_discount,
-                               quantity: item.quantity)
+                               percentage_discount: 1 - set.first.percentage_discount)
       end
     end
     # Ideally the below helper method could be refactored to oblivion
@@ -26,8 +25,7 @@ class ChargeMaster
     if !items.empty?
       items.each do |item|
         DiscountedItem.create!(invoice_item: item, bulk_discount: largest_discount, 
-                               percentage_discount: largest_discount.percentage_discount,
-                               quantity: item.quantity)
+                               percentage_discount: 1 - largest_discount.percentage_discount)
       end
     end
   end

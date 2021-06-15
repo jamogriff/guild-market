@@ -33,4 +33,16 @@ class Invoice < ApplicationRecord
     invoice_items.total_revenue
   end
 
+  def discounted_revenue
+    self.invoice_items.joins(:discounted_items).sum("invoice_items.unit_price * invoice_items.quantity * discounted_items.percentage_discount")
+  end
+
+  # Uses left outer join to calculate revenue of invoice items that don't have an associated discount
+  def remaining_revenue
+    self.invoice_items.left_outer_joins(:discounted_items).where("discounted_items.id IS null").sum("invoice_items.quantity * invoice_items.unit_price")
+  end
+
+  def revenue_with_discounts
+    discounted_revenue + remaining_revenue
+  end
 end
