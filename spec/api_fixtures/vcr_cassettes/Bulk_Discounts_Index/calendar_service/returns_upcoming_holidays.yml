@@ -19,7 +19,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 12 Jun 2021 21:46:03 GMT
+      - Tue, 15 Jun 2021 21:46:22 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -33,19 +33,17 @@ http_interactions:
       Cf-Cache-Status:
       - HIT
       Age:
-      - '27503'
-      Cf-Request-Id:
-      - 0aa3c979b80000ec8a2729b000000001
+      - '25592'
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=n%2FZ0k5Zv%2FJyqrbRigyR6zdrcK0V93OyWgu0irRlNfC7SSQyjwkF%2FvJMndTTS%2FRfCvV7lR0xWmBgcr5kVJDpFA%2Fh%2FJapLJ2ZZMb4kiRz78PAD3rI0de%2FRACK8Mw%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=pg6mdCbbn60%2BzycPMqLvoG%2BW5NXaKS8lF4zhTDkGUdFJG8DgWSBxCl7sv0L%2F0BFpHs142BE2bOULfr8htShmuqtuf8mNCw543Ht7mbHuEmPFIy6%2B3Vomw0Gfog%3D%3D"}],"group":"cf-nel","max_age":604800}'
       Nel:
       - '{"report_to":"cf-nel","max_age":604800}'
       Server:
       - cloudflare
       Cf-Ray:
-      - 65e645092c42ec8a-DFW
+      - 65fefda50b15d29e-DFW
       Alt-Svc:
       - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400, h3=":443";
         ma=86400
@@ -62,7 +60,7 @@ http_interactions:
         Luther King, Jr. Day","name":"Martin Luther King, Jr. Day","countryCode":"US","fixed":false,"global":true,"counties":null,"launchYear":null,"type":"Public"},{"date":"2022-02-21","localName":"Presidents
         Day","name":"Washington''s Birthday","countryCode":"US","fixed":false,"global":true,"counties":null,"launchYear":null,"type":"Public"},{"date":"2022-05-30","localName":"Memorial
         Day","name":"Memorial Day","countryCode":"US","fixed":false,"global":true,"counties":null,"launchYear":null,"type":"Public"}]'
-  recorded_at: Sat, 12 Jun 2021 21:46:03 GMT
+  recorded_at: Tue, 15 Jun 2021 21:46:22 GMT
 - request:
     method: get
     uri: https://date.nager.at/api/v2/NextPublicHolidays/US
@@ -82,7 +80,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 12 Jun 2021 21:46:03 GMT
+      - Tue, 15 Jun 2021 21:46:23 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -96,19 +94,17 @@ http_interactions:
       Cf-Cache-Status:
       - HIT
       Age:
-      - '27503'
-      Cf-Request-Id:
-      - 0aa3c97a3d0000e04300996000000001
+      - '25593'
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=hZY8fgRcrTmDgIXV3HaZNzhb6BBYcnsaKBpa4C7msAbSybREA2H0SzPrJZqJQfzXpQlgQTr%2FBuVIGQ8ZIGRU0fWuy3TL7GGcpUfD3naTtJoayLRcng3MpJqAEA%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=KH%2FKlqVdqOegpTKJZRtO94dDu%2BBUbls6DVa4HP%2B%2Bk0e4PaxP2oAIyC1YFRk45lHSuuFYblKvZgbJJ1%2FpLF9wL79pZaeHbMgk3HVmp9UXB54xluvoWWBxM0cpYQ%3D%3D"}],"group":"cf-nel","max_age":604800}'
       Nel:
       - '{"report_to":"cf-nel","max_age":604800}'
       Server:
       - cloudflare
       Cf-Ray:
-      - 65e64509fad7e043-DFW
+      - 65fefda5cc6e285f-DFW
       Alt-Svc:
       - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400, h3=":443";
         ma=86400
@@ -125,5 +121,5 @@ http_interactions:
         Luther King, Jr. Day","name":"Martin Luther King, Jr. Day","countryCode":"US","fixed":false,"global":true,"counties":null,"launchYear":null,"type":"Public"},{"date":"2022-02-21","localName":"Presidents
         Day","name":"Washington''s Birthday","countryCode":"US","fixed":false,"global":true,"counties":null,"launchYear":null,"type":"Public"},{"date":"2022-05-30","localName":"Memorial
         Day","name":"Memorial Day","countryCode":"US","fixed":false,"global":true,"counties":null,"launchYear":null,"type":"Public"}]'
-  recorded_at: Sat, 12 Jun 2021 21:46:03 GMT
+  recorded_at: Tue, 15 Jun 2021 21:46:22 GMT
 recorded_with: VCR 6.0.0

@@ -8,6 +8,11 @@ class Admin::InvoicesController < ApplicationController
 
   def show
     @invoice = Invoice.find(params[:id])
+
+    # This is really a has_one and not a has_many association,
+    # but reconfiguring that broke a ton of dependencies
+    @merchant = @invoice.merchants.first
+    ChargeMaster.apply_discounts(@invoice.id, @merchant.bulk_discounts)
   end
 
   def update

@@ -17,18 +17,25 @@
   <div>
     <h1> All Invoice Items</h1><br>
     <h3>Expected Total Revenue: <%= number_to_currency(@invoice_items.total_revenue.to_f/100) %></h3> <br>
+    <h3>Total Revenue including Discounts: <%= number_to_currency(@invoice.revenue_with_discounts / 100) %></h3> <br>
     <table class="invoice-items"style='width: 80%; border-color: white;'>
       <tr>
         <th>Item</th>
         <th>Quantity</th>
         <th>Unit Price</th>
+        <th>Discount</th>
         <th>Status</th>
       </tr>
         <% @invoice_items.each do |ii| %>
-          <tr>
+          <tr id="<%=ii.id%>">
             <td><%= ii.item.name %></td>
             <td><%= ii.quantity %></td>
             <td><%= number_to_currency(ii.unit_price) %></td>
+            <td><% if !ii.full_priced? %>
+              <%= link_to "#{ii.discount.percentage_discount * 100}% Off",
+                    merchant_bulk_discount_path(merchant_id: @merchant.id, id: ii.discount.id) %> 
+                <% end %>
+            </td>
             <td class="status-update"><%= form_with model: @invoice_item, method: :patch, local: true do |form| %>
                 <%= form.hidden_field :ii_id, :value => ii.id %>
                 <%= form.select :status, options_for_select([:pending, :packaged, :shipped ], ii.status) %>

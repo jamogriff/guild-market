@@ -34,9 +34,41 @@ RSpec.describe 'invoices show page', type: :feature do
 
     it 'lists total revenue from this invoice' do
       visit "/admin/invoices/#{@invoice.id}"
-      exp_revenue = "$#{@invoice.revenue / 100.0}"
+      exp_revenue = "$21,067.77"
       within "section#revenue" do
         expect(page).to have_content exp_revenue
+      end
+    end
+
+    context 'user does not have any current discounts' do
+      it 'has same value as total revenue' do
+        exp_revenue = "$21,067.77"
+        visit "/admin/invoices/#{@invoice.id}"
+        within "section#revenue" do
+          expect(page).to have_content(exp_revenue).twice
+        end
+      end
+    end
+
+    context 'user has discounts' do
+    
+      before :each do
+        BulkDiscount.destroy_all
+        @merchant = Merchant.first
+        @invoice = Invoice.find(29)
+        @merchant.bulk_discounts.create!(percentage_discount: 0.25, quantity_threshold: 5)
+        @merchant.bulk_discounts.create!(percentage_discount: 0.30, quantity_threshold: 8)
+        @merchant.bulk_discounts.create!(percentage_discount: 0.25, quantity_threshold: 5)
+      end
+
+      it 'lists total revenue including discounts' do
+        exp_revenue = "$12,817.94"
+        discount_revenue = "$9,957.07"
+        visit "/admin/invoices/#{@invoice.id}"
+        within "section#revenue" do
+          expect(page).to have_content(exp_revenue)
+          expect(page).to have_content(discount_revenue)
+        end
       end
     end
   end

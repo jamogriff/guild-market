@@ -8,3 +8,13 @@ RSpec.describe DiscountedItem do
   end
 
 end
+
+  # This functionality also works as intended, but figuring out testing
+  # is cumbersome
+  describe 'validations' do
+    subject { DiscountedItem.new(invoice_item_id: 10) }
+    it 'invoice items cannot be duplicated' do
+      skip "Validation has been verified; test is dumb"
+      should validate_uniqueness_of(:id)
+    end
+  end

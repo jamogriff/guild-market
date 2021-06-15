@@ -62,4 +62,51 @@ RSpec.describe 'Merchant invoice show page' do
       expect(page).to have_content("Expected Total Revenue: $136.00")
     end
   end
+
+  describe 'discount functionality' do
+
+    before :each do
+      BulkDiscount.destroy_all
+      @merchant = Merchant.first
+      @invoice = Invoice.find(29)
+      @merchant.bulk_discounts.create!(percentage_discount: 0.25, quantity_threshold: 5)
+      @merchant.bulk_discounts.create!(percentage_discount: 0.30, quantity_threshold: 8)
+      @merchant.bulk_discounts.create!(percentage_discount: 0.25, quantity_threshold: 5)
+    end
+
+    it 'lists total discounted revenue' do
+      visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
+      exp_amount = @invoice.revenue_with_discounts / 100.0
+      formatted_num ='$9,957.07' 
+      expect(page).to have_content(formatted_num)
+    end
+
+    # Getting this bug worked out took some real software engineering!
+    it 'discounted revenue does not change when accessing page multiple times' do
+      counter = 0
+      results = []
+      5.times do 
+        visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
+        results << @invoice.revenue_with_discounts / 100.0
+      end
+
+      exp_results = results.uniq.length == 1
+      expect(exp_results).to eq true
+    end
+
+    it 'has link to associated bulk discount page' do
+      visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
+      invoice_item_with_link = @invoice.discounted_items.first
+      link_name = "#{invoice_item_with_link.discount.percentage_discount * 100}% Off"
+      invoice_item_without_link = @invoice.full_price_items.first
+
+      within "tr##{invoice_item_with_link.id}" do
+        expect(page).to have_link link_name
+      end
+      within "tr##{invoice_item_without_link.id}" do
+        expect(page).not_to have_link
+      end
+    end
+
+  end
 end
