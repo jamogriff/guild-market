@@ -84,5 +84,13 @@ RSpec.describe Invoice do
     it 'calculates total revenue accounting for discounts' do
       expect(@invoice.revenue_with_discounts).to eq 834141.9 + 312246
     end
+
+    it 'collects invoice items that are full price' do
+      expect(@invoice.full_price_items.length).to eq 5
+    end
+
+    it 'collects invoice items that are discounte' do
+      expect(@invoice.discounted_items.length).to eq 4
+    end
   end
 end
