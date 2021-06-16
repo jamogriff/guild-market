@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'invoices index page', type: :feature do
+  before :all do
+    VCR.insert_cassette('Site_Wide/github_statistics', :record => :new_episodes)
+  end
+
+  after :all do
+    VCR.eject_cassette
+  end
   describe 'page appearance' do
     it 'has links to every invoice' do
       visit '/admin/invoices'

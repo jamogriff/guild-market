@@ -3,6 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Merchant invoices index page' do
+
+  before :all do
+    VCR.insert_cassette('Site_Wide/github_statistics', :record => :new_episodes)
+  end
+
+  after :all do
+    VCR.eject_cassette
+  end
+
   before :each do 
     @merchant = Merchant.create!(name: 'Sally Handmade')
     @merchant_2 = Merchant.create!(name: 'Billy Mandmade')

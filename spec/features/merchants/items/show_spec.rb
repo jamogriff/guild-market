@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "items show page" do
+  before :all do
+    VCR.insert_cassette('Site_Wide/github_statistics', :record => :new_episodes)
+  end
+
+  after :all do
+    VCR.eject_cassette
+  end
   before :each do
     @merchant_1 = Merchant.first
     @item_1 = Item.first

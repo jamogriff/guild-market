@@ -74,7 +74,6 @@ RSpec.describe Invoice do
     end
 
     it 'calculates discounted revenue' do
-      # 95% sure my method works; change exp value
       expect(@invoice.discounted_revenue).to eq 834141.9
     end
 

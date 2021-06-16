@@ -1,10 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'invoices show page', type: :feature do
+
   before(:all) do
+    VCR.insert_cassette('Site_Wide/github_statistics', :record => :new_episodes)
     @invoice = Invoice.first
     @first_invoice_item = @invoice.invoice_items.first
     @last_invoice_item = @invoice.invoice_items.last
+  end
+
+  after :all do
+    VCR.eject_cassette
   end
 
   describe 'page appearance' do

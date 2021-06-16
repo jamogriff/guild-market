@@ -1,7 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'admin index page', type: :feature do
-  before(:each) do
+
+  before :all do
+    VCR.insert_cassette('Site_Wide/github_statistics', :record => :new_episodes)
+  end
+
+  after :all do
+    VCR.eject_cassette
   end
 
   describe 'page appearance' do

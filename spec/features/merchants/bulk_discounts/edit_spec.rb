@@ -2,6 +2,15 @@ require 'rails_helper'
 
 RSpec.describe 'discount edit page' do
 
+  before :all do
+    VCR.insert_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays', :record => :new_episodes)
+  end
+
+  after :all do
+    VCR.eject_cassette
+  end
+
+
   before :each do
     @merchant = Merchant.first
     @discount_1 = @merchant.bulk_discounts.create!(percentage_discount: 0.20, quantity_threshold: 10)

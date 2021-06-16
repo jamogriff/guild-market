@@ -9,12 +9,14 @@ RSpec.describe 'Bulk Discounts Index' do
   end
 
   describe 'calendar service' do
-    it 'returns upcoming holidays', :vcr do
-      # Thorough testing of this service lives in spec/services
-      holidays = CalendarService.next_three_holidays
-      visit "/merchants/#{@merchant.id}/bulk_discounts"
-      expect(page).to have_content holidays.first[:name]
-      expect(page).to have_content holidays.last[:name]
+    it 'returns upcoming holidays' do
+      VCR.use_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays', :record => :new_episodes) do
+        # Thorough testing of this service lives in spec/services
+        holidays = CalendarService.next_three_holidays
+        visit "/merchants/#{@merchant.id}/bulk_discounts"
+        expect(page).to have_content holidays.first[:name]
+        expect(page).to have_content holidays.last[:name]
+      end
     end
 
     it 'flashes an error when no connection' do
@@ -29,7 +31,7 @@ RSpec.describe 'Bulk Discounts Index' do
 
   describe 'appearance' do
     it 'lists all of a merchant\'s bulk discounts' do
-      VCR.use_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays') do
+      VCR.use_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays', :record => :new_episodes) do
         visit "/merchants/#{@merchant.id}/bulk_discounts"
         exp_1 = @discount_1.percentage_discount * 100
         exp_2 = @discount_2.percentage_discount * 100
@@ -42,7 +44,7 @@ RSpec.describe 'Bulk Discounts Index' do
     end
 
     it 'has link to create a new discount' do
-      VCR.use_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays') do
+      VCR.use_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays', :record => :new_episodes) do
         visit "/merchants/#{@merchant.id}/bulk_discounts"
         click_link "New Bulk Discount"
         expect(current_path).to eq "/merchants/#{@merchant.id}/bulk_discounts/new"
@@ -52,7 +54,7 @@ RSpec.describe 'Bulk Discounts Index' do
     # This functionality works fine, but Capybara can't find the button id
     it 'has button to delete a discount' do
       skip "Functionality works; test is dumb"
-      VCR.use_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays') do
+      VCR.use_cassette('Bulk_Discounts_Index/calendar_service/returns_upcoming_holidays', :record => :new_episodes) do
         visit "/merchants/#{@merchant.id}/bulk_discounts"
         click_on "delete-#{@discount_1.id}"
         expect(current_path).to eq "/merchants/#{@merchant.id}/bulk_discounts"
