@@ -1,7 +1,7 @@
 
 desc "destroy and reload all seed data"
 task :load_csv do
-  Rake::Task["initialize"].invoke
+  Rake::Task["initialize_dev"].invoke
   Rake::Task["load_customers"].invoke
   Rake::Task["load_invoices"].invoke
   Rake::Task["load_merchants"].invoke
@@ -10,7 +10,7 @@ task :load_csv do
   Rake::Task["load_transactions"].invoke
 end
 
-task initialize: :environment do
+task initialize_dev: :environment do
   # Rake::Task["db:drop"].invoke
   # Rake::Task["db:create"].invoke
   # Rake::Task["db:migrate"].invoke
