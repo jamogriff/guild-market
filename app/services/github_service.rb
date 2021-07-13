@@ -1,12 +1,12 @@
 class GithubService
 
   def self.repo_details
-    response = conn.get('/repos/jamogriff/little-esty-shop')
+    response = conn.get('/repos/jamogriff/guild-market')
     validate_conn(response)
   end
 
   def self.num_merged_prs
-    response = conn.get('/repos/jamogriff/little-esty-shop/pulls?state=all')
+    response = conn.get('/repos/jamogriff/guild-market/pulls?state=all')
     validated_response = validate_conn(response)
     validated_response.count do |pr|
       pr[:merged_at]
@@ -15,7 +15,7 @@ class GithubService
 
   def self.contributors
     team_usernames = ['netia1128', 'suzkiee', 'jamogriff', 'Jaybraum']
-    response = conn.get('/repos/jamogriff/little-esty-shop/contributors')
+    response = conn.get('/repos/jamogriff/guild-market/contributors')
     validated_response = validate_conn(response)
 
     validated_response.each_with_object({}) do |login, hash|
