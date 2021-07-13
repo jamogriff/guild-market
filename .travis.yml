@@ -8,8 +8,12 @@ before_install:
 script: 
   - bundle install
   - bundle exec rake db:create
+  - bundle exec rake db:migrate
   - bundle exec rake load_test_csv RAILS_ENV=test
   - bundle exec rspec
+
+services:
+  - postgresql
 
 cache: bundler
 
