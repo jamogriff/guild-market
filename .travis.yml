@@ -1,0 +1,18 @@
+language: ruby
+rvm:
+  - 2.7.2
+
+before_install:
+  - gem install bundler
+
+script: 
+  - bundle install
+  - bundle exec rake db:create
+  - bundle exec rake load_test_csv RAILS_ENV=test
+  - bundle exec rspec
+
+cache: bundler
+
+os:
+  -linux
+  -osx
