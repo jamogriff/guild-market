@@ -1,8 +1,8 @@
-# Little Esty Shop
+# Guild Market
 
 ## Background and Description
 
-"Little Esty Shop" is a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. This was a group project at the Turing School of Software and Design that was built over the course of a week.
+Guild Market is a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. This was a group project at the Turing School of Software and Design that was built over the course of a week.
 
 ## Learning Goals
 - Practice designing a normalized database schema and defining model relationships
