@@ -10,7 +10,7 @@ RSpec.describe 'admin index page', type: :feature do
     it 'main' do
       visit '/'
 
-      expect(page).to have_content('Welcome to Little Esty Shop')
+      expect(page).to have_content('Welcome to Guild Market')
     end
 
     it 'contains a link to each merchant dashboard page' do
